@@ -5,13 +5,13 @@ settings:
   verbose: false
   check-updates: false    # disable bzt check for updates
   env:
-    application_hostname: test_confluence_instance.atlassian.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
+    application_hostname: instenv-71526-w4bn.instenv.internal.atlassian.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
     application_protocol: http        # http or https
     application_port: 80              # 80, 443, 8080, 1990, etc
-    secure: True                      # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
-    application_postfix: /confluence  # e.g. /confluence for TerraForm deployment url like `http://a1234-54321.us-east-2.elb.amazonaws.com/confluence`. Leave this value blank for url without postfix.
+    secure: False                      # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
+    application_postfix:   # e.g. /confluence for TerraForm deployment url like `http://a1234-54321.us-east-2.elb.amazonaws.com/confluence`. Leave this value blank for url without postfix.
     admin_login: admin
-    admin_password: admin
+    admin_password: -v6.-bW,3R,D97G1uAAoqMwg
     load_executor: jmeter             # jmeter and locust are supported. jmeter by default.
     concurrency: 200                  # number of concurrent virtual users for jmeter or locust scenario
     test_duration: 45m
@@ -20,7 +20,7 @@ settings:
     WEBDRIVER_VISIBLE: False
     JMETER_VERSION: 5.4.3
     LANGUAGE: en_US.utf8
-    allow_analytics: Yes              # Allow sending basic run analytics to Atlassian. These analytics help us to understand how the tool is being used and help us to continue to invest in this tooling. For more details please see our README.
+    allow_analytics: No              # Allow sending basic run analytics to Atlassian. These analytics help us to understand how the tool is being used and help us to continue to invest in this tooling. For more details please see our README.
     # Action percentage for JMeter and Locust load executors
     extended_metrics: False
     view_page: 35
@@ -86,6 +86,7 @@ scenarios:
       perc_upload_attachment: ${upload_attachment}
       perc_like_page: ${like_page}
       perc_standalone_extension: ${standalone_extension}
+
 modules:
   consolidator:
     rtimes-len: 0 # CONFSRVDEV-7631 reduce sampling
@@ -115,7 +116,10 @@ modules:
       httpsampler.ignore_failed_embedded_resources: "true"
   selenium:
     chromedriver:
-      version: "108.0.5359.71" # Supports Chrome version 108. You can refer to http://chromedriver.chromium.org/downloads
+      version: "109.0.5414.74" # Supports Chrome version 109. You can refer to http://chromedriver.chromium.org/downloads
 reporting:
 - data-source: sample-labels
   module: junit-xml
+- module: passfail
+  criteria:
+  - failures>50% within 300s, stop as failed
