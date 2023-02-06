@@ -5171,11 +5171,18 @@ if ( sleep_time &gt; 0 ) {
                   </elementProp>
                   <elementProp name="app_specific_password" elementType="Argument">
                     <stringProp name="Argument.name">app_specific_password</stringProp>
-                    <stringProp name="Argument.value">${__P(admin_password, admin)}</stringProp>
+                    <stringProp name="Argument.value">vP0VtsqXm_UrwH2uQT-DLRor</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
                 </collectionProp>
               </Arguments>
+              <hashTree/>
+              <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="false">
+                <boolProp name="displayJMeterProperties">false</boolProp>
+                <boolProp name="displayJMeterVariables">true</boolProp>
+                <boolProp name="displaySamplerProperties">true</boolProp>
+                <boolProp name="displaySystemProperties">false</boolProp>
+              </DebugPostProcessor>
               <hashTree/>
               <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="login_as_specific_user" enabled="true">
                 <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
@@ -5268,6 +5275,13 @@ prev.setIgnore()
 </stringProp>
                 </JSR223PostProcessor>
                 <hashTree/>
+                <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="false">
+                  <boolProp name="displayJMeterProperties">false</boolProp>
+                  <boolProp name="displayJMeterVariables">true</boolProp>
+                  <boolProp name="displaySamplerProperties">true</boolProp>
+                  <boolProp name="displaySystemProperties">false</boolProp>
+                </DebugPostProcessor>
+                <hashTree/>
               </hashTree>
               <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="check_logged_in_as_specific_user" enabled="true">
                 <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
@@ -5309,6 +5323,13 @@ if (response_data.username != vars.get(&quot;app_specific_username&quot;)) {
 
 </stringProp>
                 </JSR223PostProcessor>
+                <hashTree/>
+                <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="false">
+                  <boolProp name="displayJMeterProperties">false</boolProp>
+                  <boolProp name="displayJMeterVariables">true</boolProp>
+                  <boolProp name="displaySamplerProperties">true</boolProp>
+                  <boolProp name="displaySystemProperties">false</boolProp>
+                </DebugPostProcessor>
                 <hashTree/>
               </hashTree>
             </hashTree>
@@ -5515,7 +5536,13 @@ vars.put(&quot;target_space_key&quot;, &quot;JMT&quot; + randomString)</stringPr
                   <stringProp name="parameters"></stringProp>
                   <stringProp name="filename"></stringProp>
                   <stringProp name="cacheKey">false</stringProp>
-                  <stringProp name="script">int progress = Integer.parseInt(vars.get(&quot;progress-bar-loading&quot;));
+                  <stringProp name="script">int progress = 0;
+
+try {
+	progress = Integer.parseInt(vars.get(&quot;progress-bar-loading&quot;));
+} catch (NumberFormatException e) {
+	progress = 0;
+}
 
 if(progress == 100) {
 	vars.put(&quot;is-copy-space-on-going&quot;, &quot;false&quot;);
